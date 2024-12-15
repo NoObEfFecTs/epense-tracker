@@ -1,14 +1,19 @@
-# expense-tracker
+# Vue 3 Expense Tracker
 
-This template should help get you started developing with Vue 3 in Vite.
+An expense tracker app built with Vue 3 and the composition API.
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
+- Add and remove expenses/income
+    - Category
+    - Transaction date
+    - Amount
+    - Buyer
+- Track balance history
+- Track overview by category (bar chart)
+- Save data to local storage / database
+- [Vue Toastification](https://github.com/Maronato/vue-toastification) for notifications
+- [Vue date picker](https://vue3datepicker.com/installation/) for selecting dates and time ranges
+- [Chart JS](https://www.chartjs.org/docs/latest/) for charts
+- `<script setup>` syntax (Vue 3.2+)
 
 ## Project Setup
 
@@ -27,3 +32,5 @@ npm run dev
 ```sh
 npm run build
 ```
+
+#### License MIT
