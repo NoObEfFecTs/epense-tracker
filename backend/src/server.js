@@ -1,25 +1,37 @@
-const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
-const app = express();
-const db = new sqlite3.Database('./database.db');
-app.use(express.json());
+import {getExpenses, insertExpense} from './database.js';
+import express, { json } from 'express';
 
-// Initialize the database table
-db.run(`CREATE TABLE IF NOT EXISTS expenses (
-    id INTEGER PRIMARY KEY,
-    description TEXT,
-    amount REAL,
-    date TEXT
-)`);
+const app = express();
+app.use(json());
 
 // Get all expenses
-app.get('/api/expenses', (req, res) => {
-    db.all("SELECT * FROM expenses", [], (err, rows) => {
-        if (err) return res.status(400).json({error: err.message});
-        res.json({data: rows});
-    });
+app.get('/api/expenses', async(req, res) =>{
+    try {
+        const rows = await getExpenses();
+        res.json({data: rows}) 
+    } catch (err) {
+        res.status(400).json({error: err.message});
+    }
 });
 
+// Add a new expense
+app.post('/api/expenses', async (req, res) => {
+    try{
+        const { description, amount, date } = req.body;
+        const newId = await insertExpense(description, amount, date);
+        res.status(201).json({id: newId, message: 'Expense entry created!'});
+    } catch (err) {
+        res.status(400).json({error: err.message})
+    }
+});
+
+// Update an existing expense
+
+
+// Delete an expense
+
+
+/*
 // Add a new expense
 app.post('/api/expenses', (req, res) => {
     const { description, amount, date } = req.body;
@@ -51,6 +63,7 @@ app.delete('/api/expenses/:id', (req, res) => {
         res.json({ deleted: this.changes });
     });
 });
+*/
 
 app.listen(3000, () => {
     console.log('Server running on http://localhost:3000');
