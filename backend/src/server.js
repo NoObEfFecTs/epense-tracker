@@ -1,4 +1,4 @@
-import {getExpenses, insertExpense} from './database.js';
+import {deleteExpense, getExpenses, insertExpense, updateExpense} from './database.js';
 import express, { json } from 'express';
 
 const app = express();
@@ -25,45 +25,25 @@ app.post('/api/expenses', async (req, res) => {
     }
 });
 
-// Update an existing expense
-
-
-// Delete an expense
-
-
-/*
-// Add a new expense
-app.post('/api/expenses', (req, res) => {
-    const { description, amount, date } = req.body;
-    db.run(`INSERT INTO expenses (description, amount, date) VALUES (?, ?, ?)`,
-        [description, amount, date],
-        function(err) {
-            if (err) return res.status(400).json({error: err.message});
-            res.json({ id: this.lastID });
-        }
-    );
+app.put('/api/expenses', async (req, res) => {
+    try{
+        const {id, description, amount, date} = req.body;
+        await updateExpense(id, description, amount, date);
+        res.status(202).json({message: 'Update was successful'});
+    } catch (err) {
+        res.status(400).json({error: err.message})
+    }
 });
 
-// Update an expense
-app.put('/api/expenses/:id', (req, res) => {
-    const { description, amount, date } = req.body;
-    db.run(`UPDATE expenses SET description = ?, amount = ?, date = ? WHERE id = ?`,
-        [description, amount, date, req.params.id],
-        function(err) {
-            if (err) return res.status(400).json({error: err.message});
-            res.json({ updated: this.changes });
-        }
-    );
+app.delete("/api/expenses", async (req, res) => {
+    try{
+        const {id} = req.body;
+        await deleteExpense(id);
+        res.status(200).json({message: 'Deletion complete'})
+    } catch (err) {
+        res.status(400).json({error: err.message})
+    }
 });
-
-// Delete an expense
-app.delete('/api/expenses/:id', (req, res) => {
-    db.run(`DELETE FROM expenses WHERE id = ?`, req.params.id, function(err) {
-        if (err) return res.status(400).json({error: err.message});
-        res.json({ deleted: this.changes });
-    });
-});
-*/
 
 app.listen(3000, () => {
     console.log('Server running on http://localhost:3000');

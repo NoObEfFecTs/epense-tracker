@@ -42,7 +42,7 @@ export const getExpenses = () => {
 export const insertExpense = (description, amount, date) => {
     return new Promise((resolve, reject) => {
         db.run("INSERT INTO expenses (description, amount, date) VALUES (?, ?, ?)", 
-            [description, amount, date]),
+            [description, amount, date],
             function(err){
                 if (err){
                     reject(err);
@@ -50,11 +50,45 @@ export const insertExpense = (description, amount, date) => {
                     resolve(this.lastID);
                 }
         }
+    );
     }); 
 };
 
-/*
-const updateExpense = (id, description, amount, date) => {
-    
+export const updateExpense = (id, description, amount, date) => {
+    return new Promise ((resolve, reject) => {
+        // check if element exsists in db
+        console.log("ID: ",id)
+        db.get("SELECT * FROM expenses WHERE id = ?", [id], (err, row) => {
+            if (err) {
+                reject(err);
+            } else if (!row) {
+                reject(new Error("Expense not found"))
+            } else {
+                db.run("UPDATE expenses SET description = ?, amount = ?, date = ? WHERE id = ?",
+                    [description, amount, date, id],
+                    function(err){
+                        if (err){
+                            reject(err);
+                        } else{
+                            resolve("Update successful");
+                        }
+                    }
+                );
+            }
+        });
+
+    });
 };
-*/
+
+export const deleteExpense = (id) => {
+    return new Promise ((resolve, reject) => {
+        console.log("ID: ", id)
+        db.run("DELETE FROM expenses WHERE id=?", [id], (err) => {
+            if (err){
+                reject(err)
+            }else{
+                resolve("Entry gone")
+            }
+        })
+    })
+}
