@@ -3,7 +3,6 @@ import express, { json } from 'express';
 
 const app = express();
 app.use(json());
-
 // Get all expenses
 app.get('/api/expenses', async(req, res) =>{
     try {
@@ -25,19 +24,21 @@ app.post('/api/expenses', async (req, res) => {
     }
 });
 
+// Update an existing expense
 app.put('/api/expenses', async (req, res) => {
     try{
         const {id, description, amount, date} = req.body;
         await updateExpense(id, description, amount, date);
-        res.status(202).json({message: 'Update was successful'});
+        res.status(200).json({message: 'Update was successful'});
     } catch (err) {
         res.status(400).json({error: err.message})
     }
 });
 
-app.delete("/api/expenses", async (req, res) => {
+// Delete an existing expense
+app.delete("/api/expenses/:id", async (req, res) => {
     try{
-        const {id} = req.body;
+        const {id} = req.params;
         await deleteExpense(id);
         res.status(200).json({message: 'Deletion complete'})
     } catch (err) {
