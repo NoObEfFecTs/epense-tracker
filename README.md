@@ -16,12 +16,17 @@ An expense tracker app built with Vue 3 and the composition API.
 - `<script setup>` syntax (Vue 3.2+)
 
 ## Project Setup
-
+### Install Dependencies in Backend and Frontend
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Run Backend with SQLite DB connection and expose APIs
+```sh
+npm run server
+```
+
+### Compile and Hot-Reload Frontend for Development
 
 ```sh
 npm run dev
