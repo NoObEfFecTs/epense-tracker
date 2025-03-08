@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import Header from './components/Header.vue';
+import Header from './components/HeaderComponent.vue';
 import Balance from './components/Balance.vue';
 import IncomeExpenses from './components/IncomeExpenses.vue';
 import TransactionList from './components/TransactionList.vue';
