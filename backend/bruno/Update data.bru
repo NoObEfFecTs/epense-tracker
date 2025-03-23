@@ -1,0 +1,20 @@
+meta {
+  name: Update data
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:3123/api/expenses
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id" : 4,
+    "amount" : 550,
+    "date" : "2025-02-27",
+    "description" : "Miete_test"
+  }
+}

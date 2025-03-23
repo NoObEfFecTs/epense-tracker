@@ -1,8 +1,9 @@
-import {deleteExpense, getExpenses, insertExpense, updateExpense} from './database.js';
+import {deleteExpense, getExpenseById, getExpenses, insertExpense, updateExpense} from './database.js';
 import express, { json } from 'express';
+import cors from 'cors';
 
 const app = express();
-app.use(json());
+app.use(json(), cors());
 // Get all expenses
 app.get('/api/expenses', async(req, res) =>{
     try {
@@ -10,6 +11,20 @@ app.get('/api/expenses', async(req, res) =>{
         res.json({data: rows}) 
     } catch (err) {
         res.status(400).json({error: err.message});
+    }
+});
+
+// Get expense by id
+app.get('/api/expenses/:id', async(req, res) =>{
+    try {
+        const {id} = req.params;
+        console.log("ID: ",id)
+        const rows = await getExpenseById(id);
+        // console.log(rows.data)
+        // res.status(200).json({data: rows, message: "test"})
+        res.json({data: rows})
+    } catch (err) {
+        res.status(400).json({error: err.message})
     }
 });
 
@@ -46,6 +61,6 @@ app.delete("/api/expenses/:id", async (req, res) => {
     }
 });
 
-app.listen(3000, () => {
-    console.log('Server running on http://localhost:3000');
+app.listen(3123, () => {
+    console.log('Server running on http://localhost:3123');
 });

@@ -1,0 +1,19 @@
+meta {
+  name: Add data
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3123/api/expenses
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "description" : "Lebensmittel",
+    "amount" : 30,
+    "date" : "2025-03-16"
+  }
+}

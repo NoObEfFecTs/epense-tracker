@@ -30,11 +30,25 @@ const getExpenses = (callback) => {
 
 export const getExpenses = () => {
     return new Promise((resolve, reject) => {
+        console.log("Getting all data from database")
         db.all("SELECT * FROM expenses", (err, rows) => {
             if (err) {
-                return reject(err);
+                reject(err);
             }
-            resolve(rows);
+                resolve(rows);
+        });
+    });
+};
+
+export const getExpenseById = (id) => {
+    return new Promise ((resolve, reject) => {
+        // console.log("ID: ", id)
+        db.get("SELECT * FROM expenses WHERE id=?", [id], (err, rows) => {
+            if (err){
+                reject(err);
+            }else{
+                resolve(rows);
+            }
         });
     });
 };
@@ -57,7 +71,7 @@ export const insertExpense = (description, amount, date) => {
 export const updateExpense = (id, description, amount, date) => {
     return new Promise ((resolve, reject) => {
         // check if element exsists in db
-        console.log("ID: ",id)
+        // console.log("ID: ",id)
         db.get("SELECT * FROM expenses WHERE id = ?", [id], (err, row) => {
             if (err) {
                 reject(err);
@@ -82,12 +96,12 @@ export const updateExpense = (id, description, amount, date) => {
 
 export const deleteExpense = (id) => {
     return new Promise ((resolve, reject) => {
-        console.log("ID: ", id)
+        // console.log("ID: ", id)
         db.run("DELETE FROM expenses WHERE id=?", [id], (err) => {
             if (err){
-                reject(err)
+                reject(err);
             }else{
-                resolve("Entry gone")
+                resolve("Entry gone");
             }
         })
     })
