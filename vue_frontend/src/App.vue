@@ -8,7 +8,8 @@ import { RouterLink, RouterView } from 'vue-router'
       <div class="wrapper">
         <h1>Expenses tracking app</h1>
         <nav>
-          <RouterLink :to="{ name: 'expense-list' }">Expenses |</RouterLink>
+          <RouterLink :to="{ name: 'expense-overview' }">Overview | </RouterLink>
+          <RouterLink :to="{ name: 'expense-list' }">Expenses | </RouterLink>
           <RouterLink :to="{ name: 'about' }">About</RouterLink>
         </nav>
       </div>
@@ -38,4 +39,20 @@ nav a.router-link-exact-active {
 h2 {
   font-size: 20px;
 }
+
+.overview, .about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+/* @media (min-width: 1024px) {
+  .about {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+} */
 </style>

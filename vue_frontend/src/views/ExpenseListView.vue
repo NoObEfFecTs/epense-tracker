@@ -9,9 +9,9 @@ const expenses = ref(null)
 onMounted(() => {
   DatabaseService.getData().then(
     (response) => {
-      expenses.value = response.data.data,
-      console.log(response.data.data)
-      console.log("Got data")
+      expenses.value = response.data.data
+      // console.log(response.data.data)
+      // console.log("Got data")
     })
     .catch((error) => {
       console.log(error)
@@ -45,8 +45,7 @@ onMounted(() => {
   <div class="expenses">
     <h1>Expenses</h1>
     <ExpenseCard v-for="element in expenses" :key="element.id" :expense="element"/>
-    <!-- <ExpenseCard /> -->
-</div>
+  </div>
 </template>
 
 <style scoped>

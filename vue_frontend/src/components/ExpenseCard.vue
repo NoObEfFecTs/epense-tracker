@@ -18,18 +18,22 @@ defineProps({
 </script>
 
 <template>
-  <div class="expense-card">
-    <h2>{{ expense.description }}</h2>
-    <span>{{ expense.amount }} spent on {{ expense.date }}</span>
-  </div>
+  <RouterLink 
+  class="expense-link"
+  :to="{ name: 'expense-details', params : { id: expense.id } }">
+    <div class="expense-card">
+      <h2>{{ expense.description }}</h2>
+      <span>{{ expense.amount }} spent on {{ expense.date }}</span>
+    </div>
+  </RouterLink>
 </template>
 
 <style scoped>
 .expense-card {
-  padding: 20px;
+  padding: 10px;
   width: 250px;
   cursor: pointer;
-  border: 1px solid #39495c;
+  border: 1px solid #575757;
   margin-bottom: 18px;
 }
 .expense-card:hover {
@@ -37,7 +41,7 @@ defineProps({
   box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2);
 }
 .expense-link {
-  color: #2c3e50;
+  color: black;
   text-decoration: none;
 }
 </style>

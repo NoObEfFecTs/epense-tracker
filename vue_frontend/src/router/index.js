@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ExpenseListView from '@/views/ExpenseListView.vue'
 import ExpenseDetailsView from '@/views/ExpenseDetailsView.vue'
+import ExpenseOverView from '@/views/OverviewView.vue'
 import AboutView from '@/views/AboutView.vue'
 
 const router = createRouter({
@@ -8,15 +9,20 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'expense-list',
-      component: ExpenseListView,
+      name: 'expense-overview',
+      component: ExpenseOverView,
     },
-    // {
-    //   path: '/expense/:id',
-    //   name: 'expense-details',
-    //   props: true,
-    //   component: ExpenseDetailsView,
-    // },
+    {
+      path: '/expense-list',
+      name : 'expense-list',
+      component : ExpenseListView
+    },
+    {
+      path: '/expense/:id',
+      name: 'expense-details',
+      props: true,
+      component: ExpenseDetailsView,
+    },
     {
       path: '/about',
       name: 'about',
