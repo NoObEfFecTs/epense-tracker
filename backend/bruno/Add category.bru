@@ -1,0 +1,17 @@
+meta {
+  name: Add category
+  type: http
+  seq: 7
+}
+
+post {
+  url: http://localhost:3123/api/categories
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "category" : "Mobilität"
+  }
+}

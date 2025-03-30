@@ -11,11 +11,17 @@ const apiClient = axios.create({
 })
 
 export default {
-  getData() {
+  getExpenses() {
     //console.log("Getting data...")
     // data = apiClient.get('/expenses')
     // console.log(data)
     return apiClient.get('/expenses')
+  },
+  getCategories() {
+    //console.log("Getting data...")
+    // data = apiClient.get('/expenses')
+    // console.log(data)
+    return apiClient.get('/categories')
   },
   getExpense(id) {
     // console.log("Getting single id data", )

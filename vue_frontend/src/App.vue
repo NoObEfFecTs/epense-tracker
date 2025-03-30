@@ -10,6 +10,7 @@ import { RouterLink, RouterView } from 'vue-router'
         <nav>
           <RouterLink :to="{ name: 'expense-overview' }">Overview | </RouterLink>
           <RouterLink :to="{ name: 'expense-list' }">Expenses | </RouterLink>
+          <RouterLink :to="{ name: 'categories' }">Categories | </RouterLink>
           <RouterLink :to="{ name: 'about' }">About</RouterLink>
         </nav>
       </div>

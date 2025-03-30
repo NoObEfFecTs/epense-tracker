@@ -17,6 +17,11 @@ db.run(`CREATE TABLE IF NOT EXISTS expenses (
     date TEXT
 )`);
 
+db.run(`CREATE TABLE IF NOT EXISTS categories (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    category TEXT
+)`);
+
 /*
 const getExpenses = (callback) => {
     db.all("SELECT * from expenses", (err, rows) => {
@@ -27,6 +32,44 @@ const getExpenses = (callback) => {
     });
 };
 */
+
+export const getCategories = () => {
+    return new Promise((resolve, reject) => {
+        console.log("Getting all categories from database")
+        db.all("SELECT * FROM categories", (err, rows) => {
+            if (err) {
+                reject(err);
+            }
+                resolve(rows);
+        });
+    });
+};
+
+export const insertCategory = (category) => {
+    return new Promise ((resolve, reject) => {
+        // check if element exsists in db
+        // console.log("ID: ",id)
+        db.get("SELECT * FROM categories WHERE category = ?", [category], (err, row) => {
+            if (err) {
+                reject(err);
+            } else if (!row) {
+                db.run("INSERT INTO categories (category) VALUES (?)",
+                    [category],
+                    function(err){
+                        if (err){
+                            reject(err);
+                        } else{
+                            resolve(this.lastID);
+                        }
+                    }
+                );
+            } else {
+                reject(new Error("Category already present"))
+            }
+        });
+
+    });
+};
 
 export const getExpenses = () => {
     return new Promise((resolve, reject) => {

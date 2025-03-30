@@ -1,9 +1,31 @@
-import {deleteExpense, getExpenseById, getExpenses, insertExpense, updateExpense} from './database.js';
+import {deleteExpense, getCategories, getExpenseById, getExpenses, insertExpense, insertCategory ,updateExpense} from './database.js';
 import express, { json } from 'express';
 import cors from 'cors';
 
 const app = express();
 app.use(json(), cors());
+
+// get categories
+app.get('/api/categories', async(req, res) =>{
+    try {
+        const rows = await getCategories();
+        res.json({data: rows}) 
+    } catch (err) {
+        res.status(400).json({error: err.message});
+    }
+});
+
+// Add a new category
+app.post('/api/categories', async (req, res) => {
+    try{
+        const { category } = req.body;
+        const newId = await insertCategory(category);
+        res.status(201).json({id: newId, message: 'Category created!'});
+    } catch (err) {
+        res.status(400).json({error: err.message})
+    }
+});
+
 // Get all expenses
 app.get('/api/expenses', async(req, res) =>{
     try {
