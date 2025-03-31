@@ -2,6 +2,8 @@
 import { ref, onMounted } from 'vue'
 import DatabaseService from '@/services/DatabaseService'
 import ExpenseModifier from '@/components/ExpenseModifier.vue'
+import BaseInput from '@/components/BaseInput.vue'
+import BaseSelect from '@/components/BaseSelect.vue'
 
 const props = defineProps({
   id: {
@@ -11,6 +13,11 @@ const props = defineProps({
 
 const expense = ref(null)
 const categories = ref(null)
+const opts = [
+  "test1",
+  "test2",
+  "test3"
+]
 
 onMounted(() => {
   DatabaseService.getExpense(props.id)
@@ -24,7 +31,6 @@ onMounted(() => {
     DatabaseService.getCategories()
     .then((response) => {
       categories.value = response.data.data
-      // console.log("Categories: ",response.data.data)
     })
     .catch((error) => {
       console.log(error)
@@ -37,17 +43,31 @@ onMounted(() => {
   <div class="overview">
     <div class="expense" v-if="expense">
       <h1>{{ expense.description }}</h1>
+      <h3>{{ expense.category }}</h3>
       <p>{{ expense.amount }} on {{ expense.date }}</p>
       <label>Select a category</label>
-      <select v-model="expense.description"
+      <select v-model="expense.category"
           ><option
           v-for="option in categories"
           :value="option.category"
           :key="option.category"
           >{{ option.category }}</option>
       </select>
+
+      <BaseSelect
+        :options="categories"
+        opt_key='category'
+        v-model="expense.category"
+        label="Select category"
+      />
+
       <label>Select date</label>
       <input v-model="expense.date" type="date" name="date" class="field">
+      <BaseInput
+        v-model="expense.description"
+        label="Description"
+        type="text"
+      />
     </div>
     <!-- <ExpenseModifier :expense="expense" :key="expense.id"></ExpenseModifier> -->
   </div>

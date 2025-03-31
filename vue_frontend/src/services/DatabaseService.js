@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const apiClient = axios.create({
   baseURL: 'http://localhost:3123/api',
@@ -11,20 +11,22 @@ const apiClient = axios.create({
 })
 
 export default {
+  getLastExpenses(n) {
+    return apiClient.get('/expenses/last/' + n)
+  },
+  
   getExpenses() {
-    //console.log("Getting data...")
-    // data = apiClient.get('/expenses')
-    // console.log(data)
     return apiClient.get('/expenses')
   },
+
   getCategories() {
-    //console.log("Getting data...")
-    // data = apiClient.get('/expenses')
-    // console.log(data)
     return apiClient.get('/categories')
   },
+  
   getExpense(id) {
     // console.log("Getting single id data", )
     return apiClient.get('/expenses/' + id)
   }
 }
+
+

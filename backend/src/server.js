@@ -1,4 +1,4 @@
-import {deleteExpense, getCategories, getExpenseById, getExpenses, insertExpense, insertCategory ,updateExpense} from './database.js';
+import {deleteExpense, getCategories, getExpenseById, getExpenses, getLastExpenses, insertExpense, insertCategory ,updateExpense} from './database.js';
 import express, { json } from 'express';
 import cors from 'cors';
 
@@ -36,6 +36,17 @@ app.get('/api/expenses', async(req, res) =>{
     }
 });
 
+// Get last expenses
+app.get('/api/expenses/last/:n', async(req, res) =>{
+    try {
+        const {n} = req.params;
+        const rows = await getLastExpenses(n);
+        res.json({data: rows}) 
+    } catch (err) {
+        res.status(400).json({error: err.message});
+    }
+});
+
 // Get expense by id
 app.get('/api/expenses/:id', async(req, res) =>{
     try {
@@ -53,8 +64,8 @@ app.get('/api/expenses/:id', async(req, res) =>{
 // Add a new expense
 app.post('/api/expenses', async (req, res) => {
     try{
-        const { description, amount, date } = req.body;
-        const newId = await insertExpense(description, amount, date);
+        const { description, amount, category ,date } = req.body;
+        const newId = await insertExpense(description, amount, category ,date);
         res.status(201).json({id: newId, message: 'Expense entry created!'});
     } catch (err) {
         res.status(400).json({error: err.message})
@@ -64,8 +75,8 @@ app.post('/api/expenses', async (req, res) => {
 // Update an existing expense
 app.put('/api/expenses', async (req, res) => {
     try{
-        const {id, description, amount, date} = req.body;
-        await updateExpense(id, description, amount, date);
+        const {id, description, amount, category ,date} = req.body;
+        await updateExpense(id, description, amount, category ,date);
         res.status(200).json({message: 'Update was successful'});
     } catch (err) {
         res.status(400).json({error: err.message})

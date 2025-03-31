@@ -1,5 +1,4 @@
 <script setup>
-// import TheWelcome from '../components/TheWelcome.vue'
 import { ref, onMounted} from 'vue'
 import DatabaseService from '@/services/DatabaseService';
 import ExpenseCard from '@/components/ExpenseCard.vue';
@@ -7,8 +6,17 @@ import ExpenseModifier from '@/components/ExpenseModifier.vue';
 
 const expenses = ref(null)
 
+const n_exp = 5
+
+const options = {
+  "1" : 1,
+  "3" : 3,
+  "5" : 5,
+  "10" : 10
+}
+
 onMounted(() => {
-  DatabaseService.getExpenses().then(
+  DatabaseService.getLastExpenses(n_exp).then(
     (response) => {
       expenses.value = response.data.data
       // console.log(response.data.data)
@@ -45,6 +53,14 @@ onMounted(() => {
 <template>
   <div class="expenses">
     <h1>Expenses</h1>
+    <label>Number of elements: </label>
+    <select v-model="n_exp">
+      <option
+          v-for="option in options"
+          :value="option"
+          :key="option"
+          >{{ option }}</option>
+    </select>
     <ExpenseCard v-for="element in expenses" :key="element.id" :expense="element"/>
     <!-- <ExpenseModifier v-for="element in expenses" :key="element.id" :expense="element"/> -->
   </div>

@@ -13,6 +13,7 @@ const db = new sqlite3.Database('./database.db', (err) => {
 db.run(`CREATE TABLE IF NOT EXISTS expenses (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     description TEXT,
+    category TEXT,
     amount REAL,
     date TEXT
 )`);
@@ -71,6 +72,18 @@ export const insertCategory = (category) => {
     });
 };
 
+export const getLastExpenses = (n) => {
+    return new Promise((resolve, reject) => {
+        console.log("Getting filtered data from database")
+        db.all("SELECT * FROM expenses ORDER BY id DESC limit ?", [n], (err, rows) => {
+            if (err) {
+                reject(err);
+            }
+                resolve(rows);
+        });
+    });   
+}
+
 export const getExpenses = () => {
     return new Promise((resolve, reject) => {
         console.log("Getting all data from database")
@@ -80,7 +93,7 @@ export const getExpenses = () => {
             }
                 resolve(rows);
         });
-    });
+    });    
 };
 
 export const getExpenseById = (id) => {
@@ -96,10 +109,10 @@ export const getExpenseById = (id) => {
     });
 };
 
-export const insertExpense = (description, amount, date) => {
+export const insertExpense = (description, amount, category ,date) => {
     return new Promise((resolve, reject) => {
-        db.run("INSERT INTO expenses (description, amount, date) VALUES (?, ?, ?)", 
-            [description, amount, date],
+        db.run("INSERT INTO expenses (description, amount, category, date) VALUES (?, ?, ?, ?)", 
+            [description, amount, category ,date],
             function(err){
                 if (err){
                     reject(err);
@@ -111,7 +124,7 @@ export const insertExpense = (description, amount, date) => {
     }); 
 };
 
-export const updateExpense = (id, description, amount, date) => {
+export const updateExpense = (id, description, amount, category ,date) => {
     return new Promise ((resolve, reject) => {
         // check if element exsists in db
         // console.log("ID: ",id)
@@ -121,8 +134,8 @@ export const updateExpense = (id, description, amount, date) => {
             } else if (!row) {
                 reject(new Error("Expense not found"))
             } else {
-                db.run("UPDATE expenses SET description = ?, amount = ?, date = ? WHERE id = ?",
-                    [description, amount, date, id],
+                db.run("UPDATE expenses SET description = ?, amount = ?, date = ?, category = ? WHERE id = ?",
+                    [description, amount, date, category ,id],
                     function(err){
                         if (err){
                             reject(err);

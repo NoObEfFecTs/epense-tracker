@@ -22,8 +22,9 @@ defineProps({
   class="expense-link"
   :to="{ name: 'expense-details', params : { id: expense.id } }">
     <div class="expense-card">
-      <h2>{{ expense.description }}</h2>
-      <span>{{ expense.amount }} spent on {{ expense.date }}</span>
+      <h2>{{ expense.description }} {{ expense.amount }}€</h2>
+      <h4>{{ expense.category }}</h4>
+      <span>{{ expense.date }}</span>
     </div>
   </RouterLink>
 </template>
