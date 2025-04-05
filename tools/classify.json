@@ -1,0 +1,65 @@
+{
+    "Lebensmittel" : [
+        "dussmann",
+        "aldi",
+        "rewe",
+        "kaufland",
+        "edka",
+        "ecenter",
+        "netto",
+        "schwerdtner"
+    ],
+    "Baumarkt" : [
+        "toom",
+        "obi",
+        "globus",
+        "hornbach"
+    ],
+    "Mobilität" : [
+        "bahn",
+        "teilauto",
+        "nextbike"
+    ],
+    "Elektronik" : [
+        "amazon",
+        "saturn",
+        "media markt"
+    ],
+    "Media" : [
+        "bumble",
+        "cineplex",
+        "p&b",
+        "pundb",
+        "thalia"
+    ],
+    "Drogerie" : [
+        "galeria",
+        "rossmann",
+        "mueller",
+        "müller"
+    ],
+    "Abos" : [
+        "igm",
+        "huethig",
+        "spotify",
+        "netflix"
+    ],
+    "Wohnung" : [
+        "vodafone",
+        "deuter",
+        "drewag",
+        "rundfunk",
+        "ikea",
+        "moebel-kraft"
+    ],
+    "Finanzen" : [
+        "fondsbank",
+        "sparkasse"
+    ],
+    "Versicherungen" : [
+        "volkswohl",
+        "ergo",
+        "baloise",
+        "IGM"
+    ]
+}

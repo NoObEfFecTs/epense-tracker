@@ -111,16 +111,25 @@ export const getExpenseById = (id) => {
 
 export const insertExpense = (description, amount, category ,date) => {
     return new Promise((resolve, reject) => {
-        db.run("INSERT INTO expenses (description, amount, category, date) VALUES (?, ?, ?, ?)", 
-            [description, amount, category ,date],
-            function(err){
-                if (err){
-                    reject(err);
-                } else {
-                    resolve(this.lastID);
+        db.get("SELECT * FROM expenses WHERE amount = ? AND date = ?", [amount, date], (err, row) => {
+            if (err) {
+                reject(err);
+            } else if (row) {
+                reject(new Error("Expense already present in database"))
+            } else {
+                db.run("INSERT INTO expenses (description, amount, category, date) VALUES (?, ?, ?, ?)", 
+                    [description, amount, category ,date],
+                    function(err){
+                        if (err){
+                            reject(err);
+                        } else {
+                            resolve(this.lastID);
+                        }
                 }
+            );            
+            }
         }
-    );
+        );
     }); 
 };
 
