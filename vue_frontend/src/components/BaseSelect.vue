@@ -13,11 +13,6 @@
                 type: [Object],
                 required: true
             },
-            opt_key : {
-                type : String,
-                default : 'category',
-                required : true
-            }
         }
     }
 </script>

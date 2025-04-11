@@ -15,7 +15,7 @@ db.run(`CREATE TABLE IF NOT EXISTS expenses (
     description TEXT,
     category TEXT,
     amount REAL,
-    date TEXT
+    date DATE
 )`);
 
 db.run(`CREATE TABLE IF NOT EXISTS categories (
@@ -75,7 +75,35 @@ export const insertCategory = (category) => {
 export const getLastExpenses = (n) => {
     return new Promise((resolve, reject) => {
         console.log("Getting filtered data from database")
-        db.all("SELECT * FROM expenses ORDER BY id DESC limit ?", [n], (err, rows) => {
+        db.all("SELECT * FROM expenses ORDER BY date DESC limit ?", [n], (err, rows) => {
+            if (err) {
+                reject(err);
+            }
+                resolve(rows);
+        });
+    });   
+}
+
+export const getCatExpenses = (cat) => {
+    var date = new Date();
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    return new Promise((resolve, reject) => {
+        console.log("Getting filtered category data from database")
+        db.all("SELECT description, SUM(amount) FROM expenses WHERE category = ? AND date >= ? GROUP BY description", [cat, firstDay], (err, rows) => {
+            if (err) {
+                reject(err);
+            }
+                resolve(rows);
+        });
+    });   
+}
+
+export const getExpensesByCat = (cat) => {
+    var date = new Date();
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    return new Promise((resolve, reject) => {
+        console.log("Getting filtered category data from database")
+        db.all("SELECT category, SUM(amount) FROM expenses GROUP BY category", [], (err, rows) => {
             if (err) {
                 reject(err);
             }

@@ -26,7 +26,14 @@ export default {
   getExpense(id) {
     // console.log("Getting single id data", )
     return apiClient.get('/expenses/' + id)
+  },
+  getExpensebyCat() {
+    return apiClient.get('/expenses/category')
+  },
+  getExpenseforCat(cat) {
+    return apiClient.get('/expenses/category', + cat)
   }
+
 }
 
 

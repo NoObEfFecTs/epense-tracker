@@ -28,7 +28,7 @@ def categorize(data):
     desc = f"{data["Beguenstigter/Zahlungspflichtiger"]} {data["Verwendungszweck"]}"
 
     res = {
-        "category" : "onstiges",
+        "category" : "Sonstiges",
         "amount" : float(data["Betrag"].replace(",", "."))*-1,
         "description" : desc,
         "date" : data["Buchungstag"]
@@ -53,14 +53,16 @@ def parse_data(data):
     """
     data.dropna(how="any", axis=0)
     for idx, row in data.iterrows():
-        if "vorgemerkt" in row.Info or float(row["Betrag"].replace(",", "."))*-1 == 0.0:
+        if "vorgemerkt" in row.Info or float(row["Betrag"].replace(",", "."))*-1 <= 0.0:
             continue
         row_dat = categorize(row)
         send_data(row_dat)
 
 def send_data(data):
     r = requests.post(url="http://localhost:3123/api/categories", json={"category" : data["category"]})
-
+    dat_spl = data["date"].split(".")
+    new_date = f'20{dat_spl[-1]}-{dat_spl[1]}-{dat_spl[0]}'
+    data["date"] = new_date
     r = requests.post(url="http://localhost:3123/api/expenses", json=data)
     print(r.text)
 
