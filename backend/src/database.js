@@ -139,25 +139,35 @@ export const getExpenseById = (id) => {
 
 export const insertExpense = (description, amount, category ,date) => {
     return new Promise((resolve, reject) => {
-        db.get("SELECT * FROM expenses WHERE amount = ? AND date = ?", [amount, date], (err, row) => {
+        db.get("SELECT * FROM categories WHERE category = ?", [category], (err, row) => {
             if (err) {
                 reject(err);
-            } else if (row) {
-                reject(new Error("Expense already present in database"))
-            } else {
-                db.run("INSERT INTO expenses (description, amount, category, date) VALUES (?, ?, ?, ?)", 
-                    [description, amount, category ,date],
-                    function(err){
-                        if (err){
-                            reject(err);
-                        } else {
-                            resolve(this.lastID);
-                        }
-                }
-            );            
             }
-        }
-        );
+            else if (row) {
+                db.get("SELECT * FROM expenses WHERE amount = ? AND date = ? AND category = ?", [amount, date, category], (err, row) => {
+                    if (err) {
+                        reject(err);
+                    } else if (row) {
+                        reject(new Error("Expense already present in database"))
+                    } else {
+                        db.run("INSERT INTO expenses (description, amount, category, date) VALUES (?, ?, ?, ?)", 
+                            [description, amount, category ,date],
+                            function(err){
+                                if (err){
+                                    reject(err);
+                                } else {
+                                    resolve(this.lastID);
+                                }
+                        }
+                    );            
+                    }
+                }
+                );
+            }
+            else {
+                reject(new Error("Category not present in database. Please add it"))
+            }
+        })
     }); 
 };
 

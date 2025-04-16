@@ -17,27 +17,6 @@ onMounted(() => {
     })
 })
 
-// const expenses = ref([
-//   {
-//     id : 1,
-//     date : "2025-10-25",
-//     description : "Rewe",
-//     amount : 40
-//   },
-//   {
-//     id : 2,
-//     date : "2024-10-25",
-//     description : "Miete",
-//     amount : 100
-//   },
-//   {
-//     id : 3,
-//     date : "2025-10-25",
-//     description : "Aldi",
-//     amount : 35
-//   }
-// ])
-
 </script>
 
 <template>
@@ -46,9 +25,6 @@ onMounted(() => {
     <ul>
       <li v-for="cat in categories">{{ cat.category }}</li>
     </ul>
-    <!-- <h2>Add new category:</h2>
-    <input type="text" name="category">
-    <button>Add</button> -->
   </div>
 </template>
 
