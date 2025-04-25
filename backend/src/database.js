@@ -1,3 +1,4 @@
+import { response } from 'express';
 import sqlite3 from 'sqlite3';
 
 // Connects to database (creates one if it doesn't exist)
@@ -97,6 +98,20 @@ export const getCatExpenses = (cat) => {
         });
     });   
 }
+
+// export const getallCatExpenses = () => {
+//     var date = new Date();
+//     var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+//     return new Promise((resolve, reject) => {
+//         console.log("Getting filtered category data for all categories from database")
+//         db.all("SELECT description, SUM(amount) FROM expenses WHERE category = ? AND date >= ? GROUP BY description", [cat, firstDay], (err, rows) => {
+//             if (err) {
+//                 reject(err);
+//             }
+//                 resolve(rows);
+//         });
+//     });   
+// }
 
 export const getExpensesByCat = (cat) => {
     var date = new Date();

@@ -47,7 +47,6 @@ onMounted(() => {
       <p>{{ expense.amount }} € on {{ expense.date }}</p>
       <BaseSelect
         :options="categories"
-        opt_key='category'
         v-model="expense.category"
         label="Select category"
       />

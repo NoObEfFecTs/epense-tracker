@@ -30,8 +30,8 @@ export default {
   getExpensebyCat() {
     return apiClient.get('/expenses/category')
   },
-  getExpenseforCat(cat) {
-    return apiClient.get('/expenses/category', + cat)
+  getExpenseforCat(category) {
+    return apiClient.get('/expenses/category/' + category)
   }
 
 }

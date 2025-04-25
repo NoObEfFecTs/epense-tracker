@@ -2,11 +2,12 @@
 import { ref, onMounted} from 'vue'
 import DatabaseService from '@/services/DatabaseService';
 import ExpenseCard from '@/components/ExpenseCard.vue';
+import BaseSelect from '@/components/BaseSelect.vue'
 import ExpenseModifier from '@/components/ExpenseModifier.vue';
 
 const expenses = ref(null)
 
-const n_exp = 5
+const n_exp = ref(5)
 
 const options = {
   "1" : 1,
@@ -16,7 +17,11 @@ const options = {
 }
 
 onMounted(() => {
-  DatabaseService.getLastExpenses(n_exp).then(
+  get_data(n_exp.value)
+})
+
+function get_data(n){
+  DatabaseService.getLastExpenses(n).then(
     (response) => {
       expenses.value = response.data.data
       // console.log(response.data.data)
@@ -25,44 +30,19 @@ onMounted(() => {
     .catch((error) => {
       console.log(error)
     })
-})
-
-// const expenses = ref([
-//   {
-//     id : 1,
-//     date : "2025-10-25",
-//     description : "Rewe",
-//     amount : 40
-//   },
-//   {
-//     id : 2,
-//     date : "2024-10-25",
-//     description : "Miete",
-//     amount : 100
-//   },
-//   {
-//     id : 3,
-//     date : "2025-10-25",
-//     description : "Aldi",
-//     amount : 35
-//   }
-// ])
+}
 
 </script>
 
 <template>
   <div class="expenses">
     <h1>Expenses</h1>
-    <label>Number of elements: </label>
-    <select v-model="n_exp">
-      <option
-          v-for="option in options"
-          :value="option"
-          :key="option"
-          >{{ option }}</option>
-    </select>
+    <BaseSelect
+      :options="options"
+      v-model="n_exp"
+      label="Number of elements"
+    />
     <ExpenseCard v-for="element in expenses" :key="element.id" :expense="element"/>
-    <!-- <ExpenseModifier v-for="element in expenses" :key="element.id" :expense="element"/> -->
   </div>
 </template>
 

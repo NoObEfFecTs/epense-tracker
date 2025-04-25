@@ -53,13 +53,23 @@ app.get('/api/expenses/last/:n', async(req, res) =>{
 app.get('/api/expenses/category/:cat', async(req, res) =>{
     try {
         const {cat} = req.params;
-        console.log(cat)
+        // console.log(cat)
         const rows = await database.getCatExpenses(cat);
         res.json({data: rows}) 
     } catch (err) {
         res.status(400).json({error: err.message});
     }
 });
+
+// Get expenses for all categories
+// app.get('/api/expenses/category/', async(req, res) =>{
+//     try {
+//         const rows = await database.getallCatExpenses();
+//         res.json({data: rows}) 
+//     } catch (err) {
+//         res.status(400).json({error: err.message});
+//     }
+// });
 
 // Get expenses by category
 app.get('/api/expenses/category/', async(req, res) =>{

@@ -1,7 +1,6 @@
 <template>
-    <h2>{{ label }}</h2>
-    <Pie
-      v-bind="$attrs"
+    <h2 v-if="label">{{ label }}</h2>
+    <Pie v-if="chartData"
       :options="chartOptions"
       :data="chartData"
     />
