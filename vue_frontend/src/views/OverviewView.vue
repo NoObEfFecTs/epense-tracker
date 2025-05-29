@@ -35,7 +35,7 @@ const chart_data_test = ref({
 // const chartInstance = this.$attrs
 
 onMounted(() => {
-  DatabaseService.getExpensebyCat().then(
+  DatabaseService.getExpensebyCat(start_date, end_date).then(
     (response) => {
       var tmp = response.data.data
       // console.log(response.data.data)
@@ -51,7 +51,7 @@ onMounted(() => {
         // console.log("Chart: ", chartInstance)
         chart_data_test.value["labels"].push(cat)
         chart_data_test.value["datasets"][0]["data"].push(sum)
-        chart_data_test.value["datasets"][0]["backgroundColor"].push(colors[i])
+        // chart_data_test.value["datasets"][0]["backgroundColor"].push(colors[i])
         i ++;
         console.log(i)
       }
@@ -60,46 +60,46 @@ onMounted(() => {
     .catch((error) => {
       console.log(error)
     })
-    DatabaseService.getCategories().then(
-      (response) => {
-        var resp = response.data.data
-        for (const element of resp){
-          cat = element["category"]
-          categories.push(cat)
+  //   DatabaseService.getCategories().then(
+  //     (response) => {
+  //       var resp = response.data.data
+  //       for (const element of resp){
+  //         cat = element["category"]
+  //         categories.push(cat)
           
-          DatabaseService.getExpenseforCat(cat).then(
-            (resp) => {
-              var tmp_data = resp.data.data
-              var tmp_cat = resp.request.responseURL.split("/")[6]
-              if (tmp_data.length > 0) {
-                    // console.log("data available")
-                    // console.log(tmp_cat,"Data: ", tmp_data)
-                    cat_char_data.value[tmp_cat] = {
-                      datasets : [
-                        {
-                          data : [],
-                          labels : []
-                        }
-                      ]
-                    }
-                    for (const comp of tmp_data){
-                      // console.log("Comp", comp)
-                      cat_char_data.value[tmp_cat]["datasets"][0]["labels"].push(comp["description"])
-                      cat_char_data.value[tmp_cat]["datasets"][0]["data"].push(comp["SUM(amount)"])
-                    }
-                  }
-              // console.log(Object.keys(cat_char_data))
-            }
-          )
-      }
-      console.log("Cats: ", categories)
-      console.log("Cat_data: ", cat_char_data)
-      console.log("test", cat ,Object.keys(cat_char_data._rawValue))
-    }
-  )
-  .catch((error) => {
-      console.log(error)
-  })
+  //         DatabaseService.getExpenseforCat(cat).then(
+  //           (resp) => {
+  //             var tmp_data = resp.data.data
+  //             var tmp_cat = resp.request.responseURL.split("/")[6]
+  //             if (tmp_data.length > 0) {
+  //                   // console.log("data available")
+  //                   // console.log(tmp_cat,"Data: ", tmp_data)
+  //                   cat_char_data.value[tmp_cat] = {
+  //                     datasets : [
+  //                       {
+  //                         data : [],
+  //                         labels : []
+  //                       }
+  //                     ]
+  //                   }
+  //                   for (const comp of tmp_data){
+  //                     // console.log("Comp", comp)
+  //                     cat_char_data.value[tmp_cat]["datasets"][0]["labels"].push(comp["description"])
+  //                     cat_char_data.value[tmp_cat]["datasets"][0]["data"].push(comp["SUM(amount)"])
+  //                   }
+  //                 }
+  //             // console.log(Object.keys(cat_char_data))
+  //           }
+  //         )
+  //     }
+  //     console.log("Cats: ", categories)
+  //     console.log("Cat_data: ", cat_char_data)
+  //     console.log("test", cat ,Object.keys(cat_char_data._rawValue))
+  //   }
+  // )
+  // .catch((error) => {
+  //     console.log(error)
+  // })
 })
 
 </script>

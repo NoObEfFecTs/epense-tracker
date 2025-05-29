@@ -27,11 +27,11 @@ export default {
     // console.log("Getting single id data", )
     return apiClient.get('/expenses/' + id)
   },
-  getExpensebyCat() {
-    return apiClient.get('/expenses/category')
+  getExpensebyCat(start_date, end_date) {
+    return apiClient.post('/expenses/category', data={"start_date" : start_date, "end_date" : end_date})
   },
-  getExpenseforCat(category) {
-    return apiClient.get('/expenses/category/' + category)
+  getExpenseforCat(category, start_date, end_date) {
+    return apiClient.post('/expenses/category/' + category, data={"start_date" : start_date, "end_date" : end_date})
   }
 
 }

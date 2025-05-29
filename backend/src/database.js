@@ -85,12 +85,12 @@ export const getLastExpenses = (n) => {
     });   
 }
 
-export const getCatExpenses = (cat) => {
+export const getCatExpenses = (cat, start_date, end_date) => {
     var date = new Date();
     var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     return new Promise((resolve, reject) => {
         console.log("Getting filtered category data from database")
-        db.all("SELECT description, SUM(amount) FROM expenses WHERE category = ? AND date >= ? GROUP BY description", [cat, firstDay], (err, rows) => {
+        db.all("SELECT description, SUM(amount) FROM expenses WHERE category = ? AND date >= ? AND date <= ? GROUP BY description", [cat, start_date, end_date], (err, rows) => {
             if (err) {
                 reject(err);
             }
@@ -113,12 +113,10 @@ export const getCatExpenses = (cat) => {
 //     });   
 // }
 
-export const getExpensesByCat = (cat) => {
-    var date = new Date();
-    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+export const getExpensesByCat = (start_date, end_date) => {
     return new Promise((resolve, reject) => {
         console.log("Getting filtered category data from database")
-        db.all("SELECT category, SUM(amount) FROM expenses GROUP BY category", [], (err, rows) => {
+        db.all("SELECT category, SUM(amount) FROM expenses WHERE date >= ? AND date <= ? GROUP BY category", [start_date, end_date], (err, rows) => {
             if (err) {
                 reject(err);
             }

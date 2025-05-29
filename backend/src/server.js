@@ -50,11 +50,13 @@ app.get('/api/expenses/last/:n', async(req, res) =>{
 });
 
 // Get expenses for a category
-app.get('/api/expenses/category/:cat', async(req, res) =>{
+app.post('/api/expenses/category/:cat', async(req, res) =>{
     try {
+        const { start_date, end_date } = req.body;
         const {cat} = req.params;
-        // console.log(cat)
-        const rows = await database.getCatExpenses(cat);
+        // console.log("start:", start_date, "end_date:", end_date)
+        // console.log("Cat:", cat)
+        const rows = await database.getCatExpenses(cat, start_date, end_date);
         res.json({data: rows}) 
     } catch (err) {
         res.status(400).json({error: err.message});
@@ -72,9 +74,10 @@ app.get('/api/expenses/category/:cat', async(req, res) =>{
 // });
 
 // Get expenses by category
-app.get('/api/expenses/category/', async(req, res) =>{
+app.post('/api/expenses/category/', async(req, res) =>{
     try {
-        const rows = await database.getExpensesByCat();
+        const { start_date, end_date } = req.body;
+        const rows = await database.getExpensesByCat(start_date, end_date);
         res.json({data: rows}) 
     } catch (err) {
         res.status(400).json({error: err.message});

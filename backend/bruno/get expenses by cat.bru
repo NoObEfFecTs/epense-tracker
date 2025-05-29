@@ -1,11 +1,18 @@
 meta {
   name: get expenses by cat
   type: http
-  seq: 11
+  seq: 9
 }
 
-get {
+post {
   url: http://localhost:3123/api/expenses/category
-  body: none
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "start_date" : "2025-05-01",
+    "end_date" : "2025-05-30"
+  }
 }
